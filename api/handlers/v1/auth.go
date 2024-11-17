@@ -83,7 +83,7 @@ func (h *handlerV1) Login(ctx *gin.Context) {
 		Sub:       response.Email, // Use Email for JWT
 		Iat:       cast.ToString(time.Now().Unix()),
 		Role:      response.Role,
-		SigninKey: h.cfg.SigningKey,
+		SigningKey: h.cfg.SigningKey,
 		Timeout:   cast.ToInt(h.cfg.AccessTokenTimeout),
 	}
 
@@ -228,7 +228,7 @@ func (h *handlerV1) Register(ctx *gin.Context) {
 		Sub:       response.Email, // Use Email for JWT
 		Iat:       cast.ToString(time.Now().Unix()),
 		Role:      response.Role,
-		SigninKey: h.cfg.SigningKey,
+		SigningKey: h.cfg.SigningKey,
 		Timeout:   cast.ToInt(h.cfg.AccessTokenTimeout),
 	}
 

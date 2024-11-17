@@ -25,7 +25,7 @@ type Option struct {
 }
 
 // @Title       	Asrlan-Monolithic
-// @securityDefinitions.apikey
+// @securityDefinitions.apikey BearerAuth
 // @In          	header
 // @Name        	Authorization
 func New(option *Option) *gin.Engine {
@@ -41,7 +41,7 @@ func New(option *Option) *gin.Engine {
 	router.Use(cors.New(corsConfig))
 
 	jwtHandler := tokens.JWTHandler{
-		SigninKey: option.Conf.SigningKey,
+		SigningKey: option.Conf.SigningKey,
 	}
 
 	handlerV1 := v1.New(&v1.HandlerV1Options{

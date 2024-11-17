@@ -99,13 +99,6 @@ func (h *handlerV1) ListTenders(ctx *gin.Context) {
 		return
 	}
 
-	pp.Println("Heloooooooooooooooooooooooo")
-	// for key, values := range ctx.Request.Header {
-	// 	for _, value := range values {
-	// 		log.Printf("%s: %s", key, value)
-	// 	}
-	// }
-
 	ctxTime, cancel := context.WithTimeout(context.Background(), duration)
 	defer cancel()
 

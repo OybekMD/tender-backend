@@ -3,10 +3,12 @@ package tokens
 import (
 	"errors"
 	"log"
+	"strings"
 	"tender/config"
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/k0kubun/pp"
 	"github.com/spf13/cast"
 )
 
@@ -17,7 +19,7 @@ type JWTHandler struct {
 	Iat       string
 	Aud       []string
 	Role      string
-	SigninKey string
+	SigningKey string
 	Log       *log.Logger
 	Token     string
 	Timeout   int
@@ -79,6 +81,12 @@ func (jwtHandler *JWTHandler) ExtractClaims() (jwt.MapClaims, error) {
 		err   error
 	)
 
+	if strings.HasPrefix(jwtHandler.Token, "Bearer ") {
+		jwtHandler.Token = jwtHandler.Token[7:]
+	}
+
+	pp.Println(jwtHandler.Token)
+
 	token, err = jwt.Parse(jwtHandler.Token, func(t *jwt.Token) (interface{}, error) {
 		return []byte(config.Load().SigningKey), nil
 	})
@@ -102,6 +110,11 @@ func ExtractClaim(tokenStr string, signingKey []byte) (jwt.MapClaims, error) {
 		token *jwt.Token
 		err   error
 	)
+
+	if strings.HasPrefix(tokenStr, "Bearer ") {
+		tokenStr = tokenStr[7:]
+	}
+
 	token, err = jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		// check token signing method etc
 		return signingKey, nil
