@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS bids;
+DROP TABLE IF EXISTS tenders;
+DROP TABLE IF EXISTS users;
+DROP TYPE IF EXISTS user_role;
+DROP TYPE IF EXISTS tender_status;
+DROP TYPE IF EXISTS bid_status;
+DROP TYPE IF EXISTS notification_type;

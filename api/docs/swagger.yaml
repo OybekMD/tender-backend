@@ -1,0 +1,304 @@
+definitions:
+  models.AlertMessage:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  models.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.LoginResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      refresh_token:
+        type: string
+      role:
+        description: client or contractor
+        type: string
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Register:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      role:
+        description: client or contractor
+        type: string
+      username:
+        type: string
+    type: object
+  models.TenderCreate:
+    properties:
+      budget:
+        type: integer
+      client_id:
+        type: integer
+      deadline:
+        type: string
+      description:
+        type: string
+      status:
+        description: open, closed, awarded
+        type: string
+      title:
+        type: string
+    type: object
+  models.TenderResponse:
+    properties:
+      budget:
+        type: integer
+      client_id:
+        type: integer
+      created_at:
+        type: string
+      deadline:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      status:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.TenderUpdate:
+    properties:
+      id:
+        type: integer
+      status:
+        description: open, closed, awarded
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Asrlan-Monolithic
+paths:
+  /api/client/tenders:
+    get:
+      consumes:
+      - application/json
+      description: This API is for getting all tenders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.TenderResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - BearerAuth: []
+      summary: List Tenders
+      tags:
+      - tenders
+    post:
+      consumes:
+      - application/json
+      description: This API is for creating a new tender
+      parameters:
+      - description: TenderCreate Model
+        in: body
+        name: TenderCreate
+        required: true
+        schema:
+          $ref: '#/definitions/models.TenderCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.TenderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - BearerAuth: []
+      summary: Create Tender
+      tags:
+      - tenders
+  /api/client/tenders/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This API is for deleting a tender
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - BearerAuth: []
+      summary: Delete Tender
+      tags:
+      - tenders
+    put:
+      consumes:
+      - application/json
+      description: This API is for updating tender status
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Tender Model
+        in: body
+        name: TenderUpdate
+        required: true
+        schema:
+          $ref: '#/definitions/models.TenderUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TenderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - BearerAuth: []
+      summary: Update Tender Status
+      tags:
+      - tenders
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: This Api for login users login with email and username
+      parameters:
+      - description: LoginRequest
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Login
+      tags:
+      - Register
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: This Api for sign
+      parameters:
+      - description: Register
+        in: body
+        name: signup
+        required: true
+        schema:
+          $ref: '#/definitions/models.Register'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.AlertMessage'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Register
+      tags:
+      - Register
+securityDefinitions:
+  "":
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
