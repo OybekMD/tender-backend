@@ -11,7 +11,7 @@ type StorageI interface {
 	Auth() repo.AuthStorageI
 	User() repo.UserStorageI
 	Tender() repo.TenderStorageI
-	// Bid() repo.BidStorageI
+	Bid() repo.BidStorageI
 	// Notification() repo.NotificationStorageI
 }
 
@@ -19,7 +19,7 @@ type storagePg struct {
 	authRepo   repo.AuthStorageI
 	userRepo   repo.UserStorageI
 	tenderRepo repo.TenderStorageI
-	// bidRepo          repo.UserStorageI
+	bidRepo    repo.BidStorageI
 	// notificationRepo repo.UserStorageI
 }
 
@@ -28,6 +28,7 @@ func NewStoragePg(db *sqlx.DB) StorageI {
 		authRepo:   postgres.NewAuth(db),
 		userRepo:   postgres.NewUser(db),
 		tenderRepo: postgres.NewTender(db),
+		bidRepo:    postgres.NewBidRepo(db),
 		// bidRepo:          postgres.NewUser(db),
 		// notificationRepo: postgres.NewUser(db),
 	}
@@ -43,4 +44,8 @@ func (s *storagePg) User() repo.UserStorageI {
 
 func (s *storagePg) Tender() repo.TenderStorageI {
 	return s.tenderRepo
+}
+
+func (s *storagePg) Bid() repo.BidStorageI {
+	return s.bidRepo
 }

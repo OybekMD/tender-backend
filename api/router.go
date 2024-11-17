@@ -67,6 +67,12 @@ func New(option *Option) *gin.Engine {
 	api.PUT("/api/client/tenders/:id", handlerV1.UpdateTenderStatus) // Update a tender's status by ID
 	api.DELETE("/api/client/tenders/:id", handlerV1.DeleteTender)    // Delete a tender by ID
 
+	// Bid
+	router.POST("/api/contractor/tenders/:tender_id/bid", handlerV1.SubmitBid)        // Submit a bid by contractor
+	router.GET("/api/contractor/tenders/:tender_id/bid", handlerV1.ViewSubmittedBids) // View all submitted bids by contractor
+	router.POST("/api/client/tender/:tender_id/award/:bid_id", handlerV1.AwardBid)    // Awarding a bid by client
+	router.POST("/api/contractor/bids/:id", handlerV1.DeleteBid)                      // Delete a bid by contractor
+
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
