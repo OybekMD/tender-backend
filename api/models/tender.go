@@ -16,7 +16,7 @@ type TenderUpdate struct {
 
 type TenderResponse struct {
 	ID          uint   `json:"id"`
-	ClientID    uint   `json:"client_id"`
+	ClientID    string   `json:"client_id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Deadline    string `json:"deadline"`

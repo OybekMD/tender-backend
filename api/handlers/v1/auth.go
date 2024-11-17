@@ -80,7 +80,7 @@ func (h *handlerV1) Login(ctx *gin.Context) {
 
 	// Generate JWT
 	h.jwtHandler = tokens.JWTHandler{
-		Sub:       response.Email, // Use Email for JWT
+		Sub:       response.ID, // Use Email for JWT
 		Iat:       cast.ToString(time.Now().Unix()),
 		Role:      response.Role,
 		SigningKey: h.cfg.SigningKey,
@@ -225,7 +225,7 @@ func (h *handlerV1) Register(ctx *gin.Context) {
 
 	// Generate JWT
 	h.jwtHandler = tokens.JWTHandler{
-		Sub:       response.Email, // Use Email for JWT
+		Sub:       response.ID, // Use Email for JWT
 		Iat:       cast.ToString(time.Now().Unix()),
 		Role:      response.Role,
 		SigningKey: h.cfg.SigningKey,

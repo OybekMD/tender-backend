@@ -26,10 +26,9 @@ func (s *tenderRepo) Create(ctx context.Context, tender *repo.Tender) (*repo.Ten
 		title,
 		description,
 		deadline,
-		budget,
-		status
-	) VALUES ($1, $2, $3, $4, $5, $6) 
-	RETURNING id, created_at, updated_at`
+		budget
+	) VALUES ($1, $2, $3, $4, $5) 
+	RETURNING id, status, created_at, updated_at`
 
 	err := s.db.QueryRowContext(
 		ctx,
@@ -39,8 +38,7 @@ func (s *tenderRepo) Create(ctx context.Context, tender *repo.Tender) (*repo.Ten
 		tender.Description,
 		tender.Deadline,
 		tender.Budget,
-		tender.Status,
-	).Scan(&tender.ID, &tender.CreatedAt, &tender.UpdatedAt)
+	).Scan(&tender.ID, &tender.Status, &tender.CreatedAt, &tender.UpdatedAt)
 	if err != nil {
 		log.Println("Error creating tender in postgres method", err.Error())
 		return nil, err

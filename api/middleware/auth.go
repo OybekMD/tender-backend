@@ -37,7 +37,10 @@ func NewAuthorizer(e *casbin.Enforcer, jwtHandler tokens.JWTHandler, cfg config.
 				a.RequirePermission(c)
 			}
 		} else if !allow {
-			a.RequirePermission(c)
+			c.JSON(http.StatusUnauthorized, models.Error{
+				Message: "Missing token",
+			})
+			c.AbortWithStatus(401)
 		}
 	}
 }
@@ -104,7 +107,7 @@ func (a *JWTRoleAuth) RequireRefresh(c *gin.Context) {
 
 func (a *JWTRoleAuth) RequirePermission(c *gin.Context) {
 	c.JSON(http.StatusForbidden, models.Error{
-		Message: models.NoAccessMessage,
+		Message: "Missing token",
 	})
 	c.AbortWithStatus(403)
 }

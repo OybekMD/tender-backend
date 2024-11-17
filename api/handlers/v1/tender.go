@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"tender/api/helper/utils"
 	"tender/api/models"
 	"tender/storage/repo"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/k0kubun/pp"
+	"github.com/spf13/cast"
 )
 
 // @Security      BearerAuth
@@ -49,10 +50,17 @@ func (h *handlerV1) CreateTender(ctx *gin.Context) {
 	ctxTime, cancel := context.WithTimeout(context.Background(), duration)
 	defer cancel()
 
-	pp.Println(body)
+	claims, err := utils.GetClaimsFromToken(ctx.Request, h.cfg)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, &models.Error{
+			Message: models.WrongInfoMessage,
+		})
+		log.Println("failed to get GetClaimsFromToken", err.Error())
+		return
+	}
 
 	response, err := h.storage.Tender().Create(ctxTime, &repo.Tender{
-		ClientID:    body.ClientID,
+		ClientID:    cast.ToString(claims["sub"]),
 		Title:       body.Title,
 		Description: body.Description,
 		Deadline:    body.Deadline,
@@ -60,8 +68,9 @@ func (h *handlerV1) CreateTender(ctx *gin.Context) {
 		Status:      body.Status,
 	})
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, &models.Error{
-			Message: models.NotCreatedMessage,
+		fmt.Println("eerrrooroo:", err)
+		ctx.JSON(http.StatusBadRequest, &models.Error{
+			Message: "Invalid input",
 		})
 		log.Println("failed to create tender", err.Error())
 		return

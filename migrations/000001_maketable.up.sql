@@ -17,8 +17,8 @@ CREATE TABLE tenders (
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     deadline DATE NOT NULL,
-    budget DECIMAL(10, 2) NOT NULL,
-    status tender_status NOT NULL,
+    budget INT NOT NULL,
+    status tender_status NOT NULL DEFAULT 'open', -- Set default status to 'open'
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (client_id) REFERENCES users(id) ON DELETE CASCADE
@@ -28,7 +28,7 @@ CREATE TABLE bids (
     id SERIAL PRIMARY KEY,
     tender_id INT NOT NULL,
     contractor_id UUID NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    price INT NOT NULL,
     delivery_time DATE NOT NULL,
     comments TEXT,
     status bid_status NOT NULL,

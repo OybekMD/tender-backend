@@ -1,6 +1,12 @@
 package utils
 
-import "strconv"
+import (
+	"net/http"
+	"strconv"
+	"strings"
+	"tender/api/tokens"
+	"tender/config"
+)
 
 type QueryParams struct {
 	Page  int64
@@ -34,4 +40,28 @@ func ParseQueryParams(queryParams map[string][]string) (*QueryParams, []string) 
 	}
 
 	return &params, errStr
+}
+
+func GetClaimsFromToken(request *http.Request, cfg *config.Config) (map[string]interface{}, error) {
+	token := request.Header.Get("Authorization")
+
+	if token == "" {
+		return map[string]interface{}{
+			"role": "unauthorized",
+			"sub":  nil,
+			"exp":  nil,
+			"iat":  nil,
+		}, nil
+	}
+
+	if strings.Contains(token, "Bearer ") {
+		token = strings.Split(token, "Bearer ")[1]
+	}
+
+	claims, err := tokens.ExtractClaim(token, []byte(cfg.SigningKey))
+	if err != nil {
+		return nil, err
+	}
+
+	return claims, nil
 }
