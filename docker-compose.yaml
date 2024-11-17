@@ -8,7 +8,7 @@ services:
       - tender_network
     volumes:
       - ./migrations:/migrations
-    command: [ "-path", "/migrations", "-database",  "postgres://postgres:root@postgres:5432/tender?sslmode=disable", "up" ]
+    command: [ "-path", "/migrations", "-database",  "postgres://postgres:ebot@postgres:5432/tender?sslmode=disable", "up" ]
     depends_on:
       postgres-db:
         condition: service_healthy
