@@ -19,12 +19,12 @@ services:
     environment:
       POSTGRES_DB: tender
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_PASSWORD: ebot
       POSTGRES_SSL_MODE: disable
     volumes:
       - tender_postgres_volume:/var/lib/postgresql/data
     ports:
-      - "5433:5433"
+      - "5431:5432"
     networks:
       - tender_network
     restart: unless-stopped
