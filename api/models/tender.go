@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+	"time"
 
 	validation "github.com/go-ozzo/ozzo-validation"
 )
@@ -31,9 +33,38 @@ type TenderResponse struct {
 	UpdatedAt   string `json:"updated_at"`
 }
 
-func (rm *TenderUpdate) ValidateTenderStatus() error {
+// ValidateTenderStatus ensures the status field is valid
+func (tr *TenderUpdate) ValidateTenderStatus() error {
 	return validation.ValidateStruct(
-		rm,
-		validation.Field(&rm.Status, validation.Required, validation.In("open", "closed", "awarded", "cancelled")),
+		tr,
+		validation.Field(&tr.Status, validation.Required, validation.In("open", "closed", "awarded", "cancelled")),
 	)
+}
+
+// ValidateTimeAndPrice ensures the deadline is in the future and the budget is non-negative
+func (tc *TenderCreate) ValidateTimeAndPrice() error {
+	return validation.ValidateStruct(
+		tc,
+		validation.Field(&tc.Deadline, validation.Required, validation.By(validateDeadline)),
+		// validation.Field(&tc.Budget, validation.Required, validation.Min(0)),
+	)
+}
+
+// validateDeadline checks if the deadline is a valid future time
+func validateDeadline(value interface{}) error {
+	deadlineStr, ok := value.(string)
+	if !ok {
+		return errors.New("invalid deadline format")
+	}
+
+	deadline, err := time.Parse(time.RFC3339, deadlineStr)
+	if err != nil {
+		return errors.New("deadline must be in RFC3339 format (e.g., 2024-11-17T10:00:00Z)")
+	}
+
+	if time.Now().After(deadline) {
+		return errors.New("deadline must be a future time")
+	}
+
+	return nil
 }

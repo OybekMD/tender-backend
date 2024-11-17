@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"tender/api"
 	"tender/config"
 	"tender/memory"
@@ -17,8 +18,6 @@ import (
 	"github.com/spf13/cast"
 
 	_ "github.com/lib/pq"
-
-	"github.com/jmoiron/sqlx"
 )
 
 func main() {
@@ -32,7 +31,7 @@ func main() {
 		cfg.PostgresDatabase,
 	)
 
-	psqlConn, err := sqlx.Connect("postgres", psqlUrl)
+	psqlConn, err := sql.Open("postgres", psqlUrl)
 	if err != nil {
 		log.Fatalf("failed to connect to postgresql database: %v", err)
 	}

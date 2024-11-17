@@ -5,55 +5,65 @@ services:
   migrate:
     image: migrate/migrate
     networks:
-      - asrlan
+      - tender_network
     volumes:
       - ./migrations:/migrations
-    command: [ "-path", "/migrations", "-database",  "postgres://postgres:ebot@postgres:5432/asrlanmono?sslmode=disable", "up" ]
+    command: [ "-path", "/migrations", "-database",  "postgres://postgres:root@postgres:5432/tender?sslmode=disable", "up" ]
     depends_on:
-      - postgresdb
+      postgres-db:
+        condition: service_healthy
 
-  postgresdb:
-    container_name: postgres
+  postgres-db:
+    container_name: tender_postgres
     image: postgres
     environment:
+      POSTGRES_DB: tender
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ebot
-      PGDATA: /data/postgres
-      POSTGRES_DB: asrlanmono
+      POSTGRES_PASSWORD: root
+      POSTGRES_SSL_MODE: disable
     volumes:
-      - db:/databasedatadb/postgres
+      - tender_postgres_volume:/var/lib/postgresql/data
     ports:
-      - "5332:5332"
+      - "5433:5433"
     networks:
-      - asrlan
+      - tender_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres"]
+      test: [ "CMD-SHELL", "pg_isready -d tender" ]
       interval: 30s
       timeout: 10s
-      retries: 5
+      retries: 3
 
   app:
-    container_name: app
+    container_name: tender-backend
     build: .
     ports:
-      - "8080:8080"
+      - "8888:8888"
     networks:
-      - asrlan
+      - tender_network
     depends_on:
-      - redisdb
+      redis-db:
+        condition: service_healthy
+      postgres-db:
+        condition: service_healthy
 
-  redisdb:
-    container_name: redisdb
+  redis-db:
+    container_name: cache-storage
     image: redis 
     ports:
       - "6378:6378"
     networks:
-      - asrlan
+      - tender_network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
-  asrlan:
+  tender_network:
     driver: bridge
 
 volumes:
-  db:
+  tender_postgres_volume:

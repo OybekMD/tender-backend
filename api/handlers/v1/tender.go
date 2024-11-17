@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -32,7 +33,7 @@ func (h *handlerV1) CreateTender(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&body)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &models.Error{
-			Message: models.WrongInfoMessage,
+			Message: "Invalid tender data",
 		})
 		log.Println("failed to bind json", err.Error())
 		return
@@ -53,10 +54,19 @@ func (h *handlerV1) CreateTender(ctx *gin.Context) {
 	claims, err := utils.GetClaimsFromToken(ctx.Request, h.cfg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, &models.Error{
-			Message: models.WrongInfoMessage,
+			Message: "Invalid tender data",
 		})
 		log.Println("failed to get GetClaimsFromToken", err.Error())
 		return
+	}
+
+	if body.Deadline != "" {
+		if err := body.ValidateTimeAndPrice(); err != nil {
+			ctx.JSON(http.StatusBadRequest, models.Error{
+				Message: "Invalid tender data",
+			})
+			return
+		}
 	}
 
 	response, err := h.storage.Tender().Create(ctxTime, &repo.Tender{
@@ -143,7 +153,7 @@ func (h *handlerV1) UpdateTenderStatus(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&body)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, &models.Error{
-			Message: models.WrongInfoMessage,
+			Message: "Invalid tender data",
 		})
 		log.Println("failed to bind json", err.Error())
 		return
@@ -174,9 +184,17 @@ func (h *handlerV1) UpdateTenderStatus(ctx *gin.Context) {
 	}
 
 	_, err = h.storage.Tender().Update(ctxTime, tenderModel)
+	if err == sql.ErrNoRows {
+		ctx.JSON(http.StatusNotFound, &models.Error{
+			Message: "Tender not found",
+		})
+		log.Printf("Failed to update tender: %v\n", err)
+		return
+	}
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, &models.Error{
-			Message: models.NotUpdatedMessage,
+			Message: "Tender not found",
 		})
 		log.Println("failed to update tender", err.Error())
 		return
@@ -212,7 +230,15 @@ func (h *handlerV1) DeleteTender(ctx *gin.Context) {
 	defer cancel()
 
 	err = h.storage.Tender().Delete(ctxTime, id)
+
 	if err != nil {
+		fmt.Println("ERRorror oor ",err)
+		if err.Error() == "not found" {
+			ctx.JSON(http.StatusNotFound, &models.Error{
+				Message: "Tender not found or access denied",
+			})
+			return
+		}
 		ctx.JSON(http.StatusInternalServerError, &models.Error{
 			Message: models.NotDeletedMessage,
 		})
@@ -220,5 +246,7 @@ func (h *handlerV1) DeleteTender(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, true)
+	ctx.JSON(http.StatusOK, models.AlertMessage{
+		Message: "Tender deleted successfully",
+	})
 }

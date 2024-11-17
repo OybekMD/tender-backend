@@ -8,21 +8,20 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/k0kubun/pp"
 	"github.com/spf13/cast"
 )
 
 type JWTHandler struct {
-	Sub       string
-	Iss       string
-	Exp       string
-	Iat       string
-	Aud       []string
-	Role      string
+	Sub        string
+	Iss        string
+	Exp        string
+	Iat        string
+	Aud        []string
+	Role       string
 	SigningKey string
-	Log       *log.Logger
-	Token     string
-	Timeout   int
+	Log        *log.Logger
+	Token      string
+	Timeout    int
 }
 
 type CustomClaims struct {
@@ -84,8 +83,6 @@ func (jwtHandler *JWTHandler) ExtractClaims() (jwt.MapClaims, error) {
 	if strings.HasPrefix(jwtHandler.Token, "Bearer ") {
 		jwtHandler.Token = jwtHandler.Token[7:]
 	}
-
-	pp.Println(jwtHandler.Token)
 
 	token, err = jwt.Parse(jwtHandler.Token, func(t *jwt.Token) (interface{}, error) {
 		return []byte(config.Load().SigningKey), nil

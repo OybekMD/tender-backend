@@ -1,19 +1,13 @@
-DB_URL := "postgres://postgres:ebot@localhost:5432/tender?sslmode=disable"
+DB_URL := "postgres://postgres:ebot@tender_postgres:5432/tender?sslmode=disable"
 
 help: ## Display available commands.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-run: ## Run the service
-	go run cmd/main.go
-	
-# run:
-# 	docker-compose up --build
+run:
+	docker-compose up --build
 
 run_db:
 	docker-compose up -d db
-
-test:
-	go test ./...
 
 swag-gen: ## Generate swagger for api
 	swag init -g api/router.go -o api/docs

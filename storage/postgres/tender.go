@@ -2,17 +2,17 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"log"
 	"tender/storage/repo"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type tenderRepo struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func NewTender(db *sqlx.DB) repo.TenderStorageI {
+func NewTender(db *sql.DB) repo.TenderStorageI {
 	return &tenderRepo{
 		db: db,
 	}
@@ -76,10 +76,19 @@ func (s *tenderRepo) Delete(ctx context.Context, id string) error {
 	DELETE FROM tenders
 	WHERE id = $1`
 
-	_, err := s.db.ExecContext(ctx, query, id)
+	result, err := s.db.ExecContext(ctx, query, id)
 	if err != nil {
 		log.Println("Error deleting tender in postgres method", err.Error())
 		return err
+	}
+	
+	rows, err := result.RowsAffected()
+	if err != nil {
+		log.Println("Error deleting tender in postgres method", err.Error())
+		return err
+	}
+	if rows == 0 {
+		return errors.New("not found")
 	}
 
 	return nil

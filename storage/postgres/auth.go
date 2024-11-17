@@ -2,17 +2,16 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"tender/storage/repo"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type authRepo struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func NewAuth(db *sqlx.DB) repo.AuthStorageI {
+func NewAuth(db *sql.DB) repo.AuthStorageI {
 	return &authRepo{
 		db: db,
 	}

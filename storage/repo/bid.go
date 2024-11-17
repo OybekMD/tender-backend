@@ -5,11 +5,11 @@ import (
 )
 
 type SubmitBidRequest struct {
-	BidID        int    `json:"bid_id"`
+	BidID        int    `json:"id"`
 	TenderID     int    `json:"tender_id"`
 	ContractorID string `json:"contractor_id"`
 	Price        int    `json:"price"`
-	DeliveryTime string `json:"delivery_time"`
+	DeliveryTime int `json:"delivery_time"`
 	Comments     string `json:"comments"`
 	BidStatus    string `json:"status"`
 }

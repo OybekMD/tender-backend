@@ -2,19 +2,22 @@ package postgres
 
 import (
 	"context"
-	"github.com/jmoiron/sqlx"
+	"database/sql"
 	"tender/storage/repo"
+
+	"github.com/k0kubun/pp"
 )
 
 type bidRepo struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func NewBidRepo(db *sqlx.DB) repo.BidStorageI {
+func NewBidRepo(db *sql.DB) repo.BidStorageI {
 	return &bidRepo{db: db}
 }
 
 func (b *bidRepo) SubmitBid(ctx context.Context, bid *repo.SubmitBidRequest) (*repo.SubmitBidRequest, error) {
+	pp.Println(bid)
 	query := `
 	INSERT INTO bids (tender_id, contractor_id, price, delivery_time, comments, status)
 	VALUES ($1, $2, $3, $4, $5, 'pending')

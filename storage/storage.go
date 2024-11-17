@@ -1,10 +1,9 @@
 package storage
 
 import (
+	"database/sql"
 	"tender/storage/postgres"
 	"tender/storage/repo"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type StorageI interface {
@@ -23,7 +22,7 @@ type storagePg struct {
 	// notificationRepo repo.UserStorageI
 }
 
-func NewStoragePg(db *sqlx.DB) StorageI {
+func NewStoragePg(db *sql.DB) StorageI {
 	return &storagePg{
 		authRepo:   postgres.NewAuth(db),
 		userRepo:   postgres.NewUser(db),

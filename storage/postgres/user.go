@@ -2,18 +2,17 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"log"
 	"tender/storage/repo"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type userRepo struct {
-	db *sqlx.DB
+	db *sql.DB
 }
 
-func NewUser(db *sqlx.DB) repo.UserStorageI {
+func NewUser(db *sql.DB) repo.UserStorageI {
 	return &userRepo{
 		db: db,
 	}

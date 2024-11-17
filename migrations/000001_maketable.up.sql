@@ -29,7 +29,7 @@ CREATE TABLE bids (
     tender_id INT NOT NULL,
     contractor_id UUID NOT NULL,
     price INT NOT NULL,
-    delivery_time DATE NOT NULL,
+    delivery_time INT NOT NULL,
     comments TEXT,
     status bid_status NOT NULL,
     FOREIGN KEY (tender_id) REFERENCES tenders(id) ON DELETE CASCADE,
