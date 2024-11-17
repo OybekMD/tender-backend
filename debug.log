@@ -368,3 +368,111 @@
 2024/11/17 12:07:16 Invalid login or password sql: no rows in result set
 2024/11/17 12:07:29 Error retrieving user from database: sql: no rows in result set
 2024/11/17 12:07:29 Invalid login or password sql: no rows in result set
+2024/11/17 12:13:32 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:13:32 Invalid login or password sql: no rows in result set
+2024/11/17 12:14:05 Error scanning tender in get all tenders method of postgres sql: Scan error on column index 5, name "budget": converting driver.Value type []uint8 ("50000.00") to a uint: invalid syntax
+2024/11/17 12:14:05 failed to get all tenders sql: Scan error on column index 5, name "budget": converting driver.Value type []uint8 ("50000.00") to a uint: invalid syntax
+2024/11/17 12:16:06 Register failed - missing required fields: <nil>
+2024/11/17 12:16:06 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:16:06 Register failed - missing required fields: <nil>
+2024/11/17 12:16:06 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:16:07 Failed to check password in login <nil>
+2024/11/17 12:16:07 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:16:07 Invalid login or password sql: no rows in result set
+2024/11/17 12:16:07 Login failed - missing required fields: <nil>
+2024/11/17 12:16:07 Failed to check password in login <nil>
+2024/11/17 12:16:07 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:16:07 Invalid login or password sql: no rows in result set
+2024/11/17 12:16:07 Login failed - missing required fields: <nil>
+2024/11/17 12:16:08 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:16:08 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:18:11 Register failed - missing required fields: <nil>
+2024/11/17 12:18:11 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:18:11 Register failed - missing required fields: <nil>
+2024/11/17 12:18:11 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:18:13 Failed to check password in login <nil>
+2024/11/17 12:18:13 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:18:13 Invalid login or password sql: no rows in result set
+2024/11/17 12:18:13 Login failed - missing required fields: <nil>
+2024/11/17 12:18:13 Failed to check password in login <nil>
+2024/11/17 12:18:13 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:18:13 Invalid login or password sql: no rows in result set
+2024/11/17 12:18:13 Login failed - missing required fields: <nil>
+2024/11/17 12:18:14 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:18:14 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:18:14 Error updating tender in postgres method sql: no rows in result set
+2024/11/17 12:18:14 failed to update tender sql: no rows in result set
+2024/11/17 12:20:14 Register failed - missing required fields: <nil>
+2024/11/17 12:20:14 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:20:14 Register failed - missing required fields: <nil>
+2024/11/17 12:20:14 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:20:16 Failed to check password in login <nil>
+2024/11/17 12:20:16 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:20:16 Invalid login or password sql: no rows in result set
+2024/11/17 12:20:16 Login failed - missing required fields: <nil>
+2024/11/17 12:20:16 Failed to check password in login <nil>
+2024/11/17 12:20:16 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:20:16 Invalid login or password sql: no rows in result set
+2024/11/17 12:20:16 Login failed - missing required fields: <nil>
+2024/11/17 12:20:17 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:20:17 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:20:17 Error updating tender in postgres method sql: no rows in result set
+2024/11/17 12:20:17 failed to update tender sql: no rows in result set
+2024/11/17 12:23:53 Register failed - missing required fields: <nil>
+2024/11/17 12:23:53 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:23:53 Register failed - missing required fields: <nil>
+2024/11/17 12:23:53 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:23:54 Failed to check password in login <nil>
+2024/11/17 12:23:54 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:23:54 Invalid login or password sql: no rows in result set
+2024/11/17 12:23:54 Login failed - missing required fields: <nil>
+2024/11/17 12:23:54 Failed to check password in login <nil>
+2024/11/17 12:23:54 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:23:54 Invalid login or password sql: no rows in result set
+2024/11/17 12:23:54 Login failed - missing required fields: <nil>
+2024/11/17 12:23:55 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:23:55 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:23:55 Error updating tender in postgres method sql: no rows in result set
+2024/11/17 12:23:55 failed to update tender sql: no rows in result set
+2024/11/17 12:25:46 Register failed - missing required fields: <nil>
+2024/11/17 12:25:46 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:25:46 Register failed - missing required fields: <nil>
+2024/11/17 12:25:46 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:25:48 Failed to check password in login <nil>
+2024/11/17 12:25:48 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:25:48 Invalid login or password sql: no rows in result set
+2024/11/17 12:25:48 Login failed - missing required fields: <nil>
+2024/11/17 12:25:48 Failed to check password in login <nil>
+2024/11/17 12:25:48 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:25:48 Invalid login or password sql: no rows in result set
+2024/11/17 12:25:48 Login failed - missing required fields: <nil>
+2024/11/17 12:25:49 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:25:49 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:35:07 Register failed - missing required fields: <nil>
+2024/11/17 12:35:07 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:35:07 Register failed - missing required fields: <nil>
+2024/11/17 12:35:07 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:35:08 Failed to check password in login <nil>
+2024/11/17 12:35:08 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:35:08 Invalid login or password sql: no rows in result set
+2024/11/17 12:35:08 Login failed - missing required fields: <nil>
+2024/11/17 12:35:08 Failed to check password in login <nil>
+2024/11/17 12:35:08 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:35:08 Invalid login or password sql: no rows in result set
+2024/11/17 12:35:08 Login failed - missing required fields: <nil>
+2024/11/17 12:35:09 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:35:09 failed to create tender pq: invalid input syntax for type date: ""
+2024/11/17 12:40:01 Register failed - missing required fields: <nil>
+2024/11/17 12:40:01 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:40:01 Register failed - missing required fields: <nil>
+2024/11/17 12:40:01 Error Incorrect email for validation: email: must be a valid email address.
+2024/11/17 12:40:03 Failed to check password in login <nil>
+2024/11/17 12:40:03 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:40:03 Invalid login or password sql: no rows in result set
+2024/11/17 12:40:03 Login failed - missing required fields: <nil>
+2024/11/17 12:40:03 Failed to check password in login <nil>
+2024/11/17 12:40:03 Error retrieving user from database: sql: no rows in result set
+2024/11/17 12:40:03 Invalid login or password sql: no rows in result set
+2024/11/17 12:40:03 Login failed - missing required fields: <nil>
+2024/11/17 12:40:03 Error creating tender in postgres method pq: invalid input syntax for type date: ""
+2024/11/17 12:40:03 failed to create tender pq: invalid input syntax for type date: ""

@@ -137,8 +137,7 @@ func (h *handlerV1) ListTenders(ctx *gin.Context) {
 // @Failure       500 {object} models.Error
 // @Router        /api/client/tenders/{id} [PUT]
 func (h *handlerV1) UpdateTenderStatus(ctx *gin.Context) {
-	a := ctx.Param("id")
-	fmt.Println(a)
+	tender_id := ctx.Param("id")
 	var body models.TenderUpdate
 
 	err := ctx.ShouldBindJSON(&body)
@@ -162,12 +161,19 @@ func (h *handlerV1) UpdateTenderStatus(ctx *gin.Context) {
 	ctxTime, cancel := context.WithTimeout(context.Background(), duration)
 	defer cancel()
 
+	if err := body.ValidateTenderStatus(); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Error{
+			Message: "Invalid tender status",
+		})
+		return
+	}
+
 	tenderModel := &repo.Tender{
-		ID:     body.ID,
+		ID:     cast.ToUint(tender_id),
 		Status: body.Status,
 	}
 
-	response, err := h.storage.Tender().Update(ctxTime, tenderModel)
+	_, err = h.storage.Tender().Update(ctxTime, tenderModel)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, &models.Error{
 			Message: models.NotUpdatedMessage,
@@ -176,7 +182,7 @@ func (h *handlerV1) UpdateTenderStatus(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusOK, models.AlertMessage{Message: "Tender status updated"})
 }
 
 // @Security      BearerAuth
